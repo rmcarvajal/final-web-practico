@@ -8,6 +8,7 @@ import { LoanRequestsController } from "./loan-requests.controller";
 import { LoanRequestsService } from "./loan-requests.service";
 import { SeedService } from "./seed.service";
 import { ToolEntity } from "./tool.entity";
+import { LoanLimit } from "./loan-duration-rule.service";
 
 @UseGuards(AuthGuard("jwt"))
 @Controller("tools")
@@ -23,7 +24,7 @@ class ToolsController {
 @Module({
   imports: [TypeOrmModule.forFeature([ToolEntity, LoanRequestEntity]), AuthModule],
   controllers: [LoanRequestsController, ToolsController],
-  providers: [LoanRequestsService, SeedService],
+  providers: [LoanRequestsService, SeedService, LoanLimit],
 })
 export class LoanRequestsModule {}
 

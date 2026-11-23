@@ -5,12 +5,15 @@ import { CreateLoanRequestDto } from "./dto/create-loan-request.dto";
 import { LoanRequestEntity } from "./loan-request.entity";
 import { ToolEntity } from "./tool.entity";
 import { ListLoanRequestsDto } from "./dto/list-loan-requests.dto";
+import { LoanLimit } from "./loan-duration-rule.service";
 
 @Injectable()
 export class LoanRequestsService {
   constructor(
     @InjectRepository(LoanRequestEntity) private readonly requests: Repository<LoanRequestEntity>,
     @InjectRepository(ToolEntity) private readonly tools: Repository<ToolEntity>,
+
+    private readonly loanLimit: LoanLimit,
   ) {}
 
   findAll(query: ListLoanRequestsDto) {
@@ -31,6 +34,8 @@ export class LoanRequestsService {
     if (!tool) throw new NotFoundException("Tool not found.");
 
     // TODO BACK-B: aplicar la regla de duración antes de guardar la solicitud.
+
+    this.loanLimit.ensureLimitOnLoan(tool)
 
     const request = this.requests.create({ purpose: dto.purpose, days: dto.days, tool });
     return this.requests.save(request);

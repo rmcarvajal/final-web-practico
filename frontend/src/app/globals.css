@@ -1,0 +1,25 @@
+:root { font: 16px/1.55 system-ui, sans-serif; color: #172f34; background: #f2f7f6; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #11685d; }
+header { background: white; border-bottom: 1px solid #cfdfda; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 1rem max(1.25rem, calc((100vw - 840px) / 2)); }
+header nav, .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; }
+.brand { font-size: 1.2rem; font-weight: 750; text-decoration: none; }
+main, .session-bar { max-width: 840px; margin: 2rem auto; padding: 0 1.25rem; }
+.session-bar { display: flex; justify-content: flex-end; margin-bottom: 0; }
+h1 { line-height: 1.2; margin: 0 0 0.8rem; }
+.panel { background: #fff; border: 1px solid #cfdfda; border-radius: 0.85rem; padding: 1.25rem; margin-top: 1rem; }
+form.fields { display: grid; gap: 1rem; max-width: 460px; }
+form.filters { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem; margin-top: 1rem; }
+label { display: grid; gap: 0.3rem; font-weight: 600; }
+input, select, button { font: inherit; }
+input, select { min-width: 0; border: 1px solid #809c98; border-radius: 0.45rem; padding: 0.5rem 0.7rem; background: white; color: inherit; }
+button, .button { border: 0; border-radius: 0.45rem; background: #11685d; color: white; text-decoration: none; padding: 0.55rem 0.9rem; cursor: pointer; }
+form.fields button { justify-self: start; }
+[role="alert"] { color: #a52626; }
+dl { display: grid; grid-template-columns: max-content 1fr; column-gap: 1rem; }
+dt { font-weight: 650; }
+dd { margin: 0; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 0.65rem; text-align: left; border-bottom: 1px solid #cfdfda; }
+

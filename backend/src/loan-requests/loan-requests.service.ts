@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { CreateLoanRequestDto } from "./dto/create-loan-request.dto";
 import { LoanRequestEntity } from "./loan-request.entity";
 import { ToolEntity } from "./tool.entity";
+import { ListLoanRequestsDto } from "./dto/list-loan-requests.dto";
 
 @Injectable()
 export class LoanRequestsService {
@@ -12,9 +13,11 @@ export class LoanRequestsService {
     @InjectRepository(ToolEntity) private readonly tools: Repository<ToolEntity>,
   ) {}
 
-  findAll() {
+  findAll(query: ListLoanRequestsDto) {
     // TODO BACK-A: recibir el filtro y aplicarlo en la consulta del repositorio.
-    return this.requests.find({ relations: { tool: true }, order: { id: "ASC" } });
+    return this.requests.find({ 
+      where: query.toolId ? { id: query.toolId } : {},
+      relations: { tool: true }, order: { id: "ASC" } });
   }
 
   async findOne(id: number) {

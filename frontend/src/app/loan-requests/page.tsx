@@ -12,15 +12,32 @@ export default async function LoanRequestsPage({ searchParams }: LoanRequestsPag
   // TODO FRONT-A: leer searchParams y consultar las solicitudes con apiFetch.
   // TODO FRONT-A: agregar el formulario GET de filtro usando tools y la opción All tools.
   // TODO FRONT-A: mostrar las solicitudes y sus enlaces al comprobante correspondiente.
-  void searchParams;
-  void tools;
+  const { toolId } = await searchParams;
+  const endpointURL = toolId 
+  ? `/loan-requests?toolId=${toolId}`
+  : "/loan-requests"
+  // void searchParams;
+  // void tools;
 
   return (
     <main>
       <h1>Loan requests</h1>
       <Link className="button" href="/loan-requests/new">New request</Link>
       <section className="panel" aria-label="Loan requests">
-        <p>Complete the request list and its filter.</p>
+        {/* <p>Complete the request list and its filter.</p> */}
+        {tools === null && <p role="alert">Could not request loans.</p>}
+        {tools?.length === 0 && <p>No loans to show</p>}
+        {tools && tools.length > 0 && (
+          <section>
+            {tools.map((toolinfo) => (
+              <div key={toolinfo.id}>
+              <h2>{toolinfo.name}</h2>
+              <p>Days: {toolinfo.maxLoanDays}</p>
+              </div>
+            ))}
+
+          </section>
+        )}
       </section>
     </main>
   );

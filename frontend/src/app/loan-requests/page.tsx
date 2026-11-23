@@ -16,12 +16,19 @@ export default async function LoanRequestsPage({ searchParams }: LoanRequestsPag
   const endpointURL = toolId 
   ? `/loan-requests?toolId=${toolId}`
   : "/loan-requests"
+
+  const response = await apiFetch(endpointURL)
   // void searchParams;
   // void tools;
 
   return (
     <main>
       <h1>Loan requests</h1>
+      <nav aria-label="Filters">
+        <Link href="/loan-requests">All tools</Link>
+        <Link href="/loan-requests?toolId=1">tool 1</Link>
+        <Link href="/loan-requests?toolId=2">tool 2</Link>        
+      </nav>
       <Link className="button" href="/loan-requests/new">New request</Link>
       <section className="panel" aria-label="Loan requests">
         {/* <p>Complete the request list and its filter.</p> */}

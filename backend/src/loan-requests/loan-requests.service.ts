@@ -35,7 +35,7 @@ export class LoanRequestsService {
 
     // TODO BACK-B: aplicar la regla de duración antes de guardar la solicitud.
 
-    this.loanLimit.ensureLimitOnLoan(tool)
+    this.loanLimit.ensureLimitOnLoan(tool, dto)
 
     const request = this.requests.create({ purpose: dto.purpose, days: dto.days, tool });
     return this.requests.save(request);

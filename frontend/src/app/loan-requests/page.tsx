@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { apiFetch } from "../../lib/api";
-import type { Tool } from "../../lib/loan-types";
+import type { LoanRequest, Tool } from "../../lib/loan-types";
 
 type LoanRequestsPageProps = { searchParams: Promise<{ toolId?: string }> };
 
@@ -13,11 +13,14 @@ export default async function LoanRequestsPage({ searchParams }: LoanRequestsPag
   // TODO FRONT-A: agregar el formulario GET de filtro usando tools y la opción All tools.
   // TODO FRONT-A: mostrar las solicitudes y sus enlaces al comprobante correspondiente.
   const { toolId } = await searchParams;
-  const endpointURL = toolId 
-  ? `/loan-requests?toolId=${toolId}`
+  const selectedTool = toolId ? toolId : undefined
+  const endpointURL = selectedTool 
+  ? `/loan-requests?toolId=${selectedTool}`
   : "/loan-requests"
 
   const response = await apiFetch(endpointURL)
+  const data = response?.ok ? await response.json().catch(() => null) : null;
+  const loans: LoanRequest[] | null = Array.isArray(data) ? data : null;
   // void searchParams;
   // void tools;
 
@@ -32,14 +35,15 @@ export default async function LoanRequestsPage({ searchParams }: LoanRequestsPag
       <Link className="button" href="/loan-requests/new">New request</Link>
       <section className="panel" aria-label="Loan requests">
         {/* <p>Complete the request list and its filter.</p> */}
-        {tools === null && <p role="alert">Could not request loans.</p>}
-        {tools?.length === 0 && <p>No loans to show</p>}
-        {tools && tools.length > 0 && (
+        {loans === null && <p role="alert">Could not request loans.</p>}
+        {loans?.length === 0 && <p>No loans to show</p>}
+        {loans && loans.length > 0 && (
           <section>
-            {tools.map((toolinfo) => (
-              <div key={toolinfo.id}>
-              <h2>{toolinfo.name}</h2>
-              <p>Days: {toolinfo.maxLoanDays}</p>
+            {loans.map((loaninfo) => (
+              <div key={loaninfo.id}>
+              <h2>{loaninfo.purpose}</h2>
+              <p>Days: {loaninfo.days}</p>
+              <p>tool: {loaninfo.tool.name}</p>
               </div>
             ))}
 
